@@ -2,27 +2,27 @@ package org.MendezGalindoEmiliano.pixup.model;
 
 public class GeneroMusical extends Catalogo
 {
-    private String descripcion;
+    private String generoMusical;
 
     public GeneroMusical() {
     }
 
-    public GeneroMusical(String descripcion) {
-        this.descripcion = descripcion;
+    public GeneroMusical(String generoMusical) {
+        this.generoMusical = generoMusical;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getGeneroMusical() {
+        return generoMusical;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setGeneroMusical(String generoMusical) {
+        this.generoMusical = generoMusical;
     }
 
     @Override
     public String toString() {
         return "GeneroMusical{" +
-                "descripcion='" + descripcion + '\'' +
+                "generoMusical='" + generoMusical + '\'' +
                 ", id=" + id +
                 '}';
     }

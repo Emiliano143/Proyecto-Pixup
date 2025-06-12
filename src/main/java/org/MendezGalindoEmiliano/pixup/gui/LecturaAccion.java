@@ -43,4 +43,12 @@ public abstract class LecturaAccion implements Ejecutable
     {
         this.flag = flag;
     }
+
+    public Integer getOpcion() {
+        return opcion;
+    }
+
+    public void setOpcion(Integer opcion) {
+        this.opcion = opcion;
+    }
 }

@@ -14,7 +14,7 @@ public abstract class Conexion<T extends Catalogo>
 
     public static String user = "root";
     public static String password = "1234";
-    public static String db = "pixup-3A";
+    public static String db = "pixup-3a";
     public static String server = "127.0.0.1";
     protected Connection connection;
 
@@ -75,7 +75,7 @@ public abstract class Conexion<T extends Catalogo>
                     return false;
                 }
             }
-            return connection.isClosed();
+            return !connection.isClosed();
         }
         catch (SQLException e)
         {

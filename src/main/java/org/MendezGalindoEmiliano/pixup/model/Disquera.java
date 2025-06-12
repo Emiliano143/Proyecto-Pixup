@@ -2,28 +2,28 @@ package org.MendezGalindoEmiliano.pixup.model;
 
 public class Disquera extends Catalogo
 {
-    private String nombre;
+    private String disquera;
 
     public Disquera()
     {
     }
 
-    public Disquera(String nombre) {
-        this.nombre = nombre;
+    public Disquera(String disquera) {
+        this.disquera = disquera;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDisquera() {
+        return disquera;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setDisquera(String disquera) {
+        this.disquera = disquera;
     }
 
     @Override
     public String toString() {
         return "Disquera{" +
-                "nombre='" + nombre + '\'' +
+                "disquera='" + disquera + '\'' +
                 ", id=" + id +
                 '}';
     }

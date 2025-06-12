@@ -26,8 +26,7 @@ public class ConsolaVentana  extends LecturaAccion
     {
         System.out.println("Seleccione una opcion:");
         System.out.println("1.-Consola");
-        System.out.println("2.-Ventana");
-        System.out.println("3.-Salir");
+        System.out.println("2.-Salir");
     }
     @Override
     public int valorMinMenu()
@@ -38,7 +37,7 @@ public class ConsolaVentana  extends LecturaAccion
     @Override
     public int valorMaxMenu()
     {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -48,10 +47,6 @@ public class ConsolaVentana  extends LecturaAccion
         if(opcion==1)
         {
             ejecutable = Consola.getInstance( );
-        }
-        if(opcion==2)
-        {
-            ejecutable = Ventana.getInstance( );
         }
         ejecutable.setFlag( true );
         ejecutable.run( );

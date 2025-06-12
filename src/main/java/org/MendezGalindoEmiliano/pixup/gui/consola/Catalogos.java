@@ -1,11 +1,8 @@
 package org.MendezGalindoEmiliano.pixup.gui.consola;
 
 import org.MendezGalindoEmiliano.pixup.gui.LecturaAccion;
-import org.MendezGalindoEmiliano.pixup.inicio.Inicio;
 import org.MendezGalindoEmiliano.pixup.model.Catalogo;
 import org.MendezGalindoEmiliano.pixup.util.ReadUtil;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +10,6 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
     protected List<T> list;
     protected T t;
     protected boolean flag2;
-    protected File file;
-    private int nextId = 1;
 
     public Catalogos() {
         list = new ArrayList<>();
@@ -25,87 +20,57 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
     }
 
     public void print() {
-        if (isListEmpty()) {
-            System.out.println("No hay elementos");
+        List<T> list = processList(); // Siempre consulta la BD
+        if (list == null || list.isEmpty()) {
+            System.out.println("No hay elementos o error al recuperar los datos.");
+            return;
         }
-        list.stream().forEach(System.out::println);
+        System.out.println("Registros encontrados:");
+        list.forEach(System.out::println);
     }
 
     public abstract T newT();
-
-    public abstract boolean processNewT(T t);
-
+    public abstract boolean removeT(T t);
+    public abstract boolean editT(T t);
+    public abstract boolean processNewT1(T t);
     public abstract void processEditT(T t);
+    public abstract List<T> processList();
 
     public void add() {
         t = newT();
-        if (processNewT(t)) {
-            t.setId(nextId++);
-            list.add(t);
+        if (processNewT1(t)) {
+            System.out.println("Elemento agregado correctamente a la base de datos.");
+        } else {
+            System.out.println("Error al guardar el elemento en la base de datos.");
         }
     }
 
     public void edit() {
-        if (isListEmpty()) {
-            System.out.println("No hay elementos");
-            return;
-        }
-        flag2 = true;
-        while (flag2) {
-            System.out.println("Ingrese el id del elemento a editar");
-            print();
-            t = list.stream().filter(e -> e.getId().equals(ReadUtil.readInt())).findFirst().orElse(null);
-            if (t == null) {
-                System.out.println("Id incorrecto, intentelo nuevamente");
-            } else {
-                processEditT(t);
-                flag2 = false;
-                System.out.println("Elemento modificado");
-            }
+        t = newT();
+        if (editT(t)) {
+            System.out.println("Elemento agregado correctamente a la base de datos.");
+        } else {
+            System.out.println("Error al guardar el elemento en la base de datos.");
         }
     }
 
     public void remove() {
-        if (isListEmpty()) {
-            System.out.println("No hay elementos");
-            return;
-        }
-        flag2 = true;
-        while (flag2) {
-            System.out.println("Ingrese el id del elemento a borrar");
-            print();
-            t = list.stream().filter(e -> e.getId().equals(ReadUtil.readInt())).findFirst().orElse(null);
-            if (t == null) {
-                System.out.println("Id incorrecto, intentelo nuevamente");
-            } else {
-                list.remove(t);
-                flag2 = false;
-                System.out.println("Elemento borrado");
-            }
+        t=newT();
+        if (removeT(t)) {
+            System.out.println("Elemento borrado correctamente.");
+        } else {
+            System.out.println("Error al eliminar el elemento en la base de datos.");
         }
     }
 
     @Override
     public void procesaOpcion() {
         switch (opcion) {
-            case 1:
-                add();
-                break;
-            case 2:
-                edit();
-                break;
-            case 3:
-                remove();
-                break;
-            case 4:
-                print();
-                break;
-            case 5:
-                guardarArchivo();
-                break;
-            case 6:
-                leerArchivo();
-                break;
+            case 1 -> add();
+            case 2 -> edit();
+            case 3 -> remove();
+            case 4 -> print();
+            case 5 -> System.out.println(5);
         }
     }
 
@@ -113,60 +78,16 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
         return getTitulo();
     }
 
-    private void leerArchivo() {
-        ObjectInputStream objectInputStream = null;
-        FileInputStream fileInputStream = null;
-        try {
-            file = getFile();
-            fileInputStream = new FileInputStream(file);
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            list = (List<T>) objectInputStream.readObject();
-            objectInputStream.close();
-            fileInputStream.close();
-            System.out.println("Archivo leido con exito");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public abstract File getFile();
-
-    private void guardarArchivo() {
-        ObjectOutputStream objectOutputStream = null;
-        FileOutputStream fileOutputStream = null;
-        try {
-            if (isListEmpty()) {
-                System.out.println("No hay elementos para guardar");
-            }
-            file = getFile();
-            fileOutputStream = new FileOutputStream(file);
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(list);
-            objectOutputStream.close();
-            fileOutputStream.close();
-            System.out.println("Archivo guardado con exito");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public void despliegaMenu() {
         System.out.println("Menú de " + getTitulo() + ": ");
-        System.out.println("Seleccione una opcion:");
-        System.out.println("1.-Agregar");
-        System.out.println("2.-Editar");
-        System.out.println("3.-Borrar");
-        System.out.println("4.-Imprimir");
-        System.out.println("5.-Guardar en archivo");
-        System.out.println("6.-Leer de archivo");
-        System.out.println("7.-Salir");
+        System.out.println("Seleccione una opción:");
+        System.out.println("1.- Agregar");
+        System.out.println("2.- Actualizar");
+        System.out.println("3.- Borrar");
+        System.out.println("4.- Encontrar Todos");
+        System.out.println("5.- Encontrar por ID");
+        System.out.println("6.- Salir");
     }
 
     @Override
@@ -176,7 +97,7 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
 
     @Override
     public int valorMaxMenu() {
-        return 7;
+        return 6;
     }
-
 }
+

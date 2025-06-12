@@ -22,13 +22,12 @@ public class ListaCatalogos extends LecturaAccion
     public void despliegaMenu()
     {
         System.out.println( "Seleccione una opcion:" );
-        System.out.println( "1.-Estado");
-        System.out.println( "2.-Municipio");
-        System.out.println( "3.-Colonia");
-        System.out.println( "4.-Artista");
-        System.out.println( "5.-Disquera");
-        System.out.println( "6.-Genero musical");
-        System.out.println( "7.-Salir");
+        System.out.println( "1.-Artista");
+        System.out.println( "2.-Disquera");
+        System.out.println( "3.-Genero musical");
+        System.out.println( "4.-Disco");
+        System.out.println( "5.-Canción");
+        System.out.println( "6.-Salir");
     }
     @Override
     public int valorMinMenu()
@@ -39,7 +38,7 @@ public class ListaCatalogos extends LecturaAccion
     @Override
     public int valorMaxMenu()
     {
-        return 7;
+        return 6;
     }
 
     @Override
@@ -49,22 +48,19 @@ public class ListaCatalogos extends LecturaAccion
         switch (opcion)
         {
             case 1:
-                ejecutable = EstadoCatalogo.getInstance( );
-                break;
-            case 2:
-                System.out.println( "No implementado" );
-                break;
-            case 3:
-                System.out.println( "No implementado" );
-                break;
-            case 4:
                 ejecutable = ArtistaCatalogo.getInstance();
                 break;
-            case 5:
+            case 2:
                 ejecutable = DisqueraCatalogo.getInstance();
                 break;
-            case 6:
+            case 3:
                 ejecutable = GeneroMusicalCatalogo.getInstance();
+                break;
+            case 4:
+                ejecutable = DisqueraCatalogo.getInstance();
+                break;
+            case 5:
+                ejecutable = CancionCatalogo.getInstance();
                 break;
 
         }
