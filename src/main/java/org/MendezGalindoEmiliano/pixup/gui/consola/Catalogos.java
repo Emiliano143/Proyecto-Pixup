@@ -27,14 +27,16 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
         }
         System.out.println("Registros encontrados:");
         list.forEach(System.out::println);
+        this.list = list;
     }
 
     public abstract T newT();
-    public abstract boolean removeT(T t);
-    public abstract boolean editT(T t);
+    public abstract boolean processNewT(T t);
     public abstract boolean processNewT1(T t);
     public abstract void processEditT(T t);
+    public abstract void processRemoveT(T t);
     public abstract List<T> processList();
+    public abstract void processFindByIdT(int id);
 
     public void add() {
         t = newT();
@@ -46,23 +48,70 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
     }
 
     public void edit() {
-        t = newT();
-        if (editT(t)) {
-            System.out.println("Elemento agregado correctamente a la base de datos.");
-        } else {
-            System.out.println("Error al guardar el elemento en la base de datos.");
+        /*if (isListEmpty()) {
+            System.out.println("No hay elementos");
+            return;
         }
+        flag2 = true;
+        while (flag2) {*/
+        print();
+        System.out.println("Ingrese el id del elemento a editar");
+        int idEdit = ReadUtil.readInt();
+        t = list.stream()
+                .filter(e -> e.getId().equals(idEdit))
+                .findFirst().orElse(null);
+        if (t == null) {
+            System.out.println("Id incorrecto, inténtelo nuevamente");
+        } else {
+            processEditT(t);
+            flag2 = false;
+            System.out.println("Elemento modificado");
+        }
+        /*}*/
     }
 
     public void remove() {
-        t=newT();
-        if (removeT(t)) {
-            System.out.println("Elemento borrado correctamente.");
-        } else {
-            System.out.println("Error al eliminar el elemento en la base de datos.");
+        /*if (isListEmpty()) {
+            System.out.println("No hay elementos");
+            return;
         }
+        flag2 = true;
+        while (flag2) {*/
+        print();
+        System.out.println("Ingrese el id del elemento a borrar");
+        t = list.stream()
+                .filter(e -> e.getId().equals(ReadUtil.readInt()))
+                .findFirst().orElse(null);
+        if (t == null) {
+            System.out.println("Id incorrecto, inténtelo nuevamente");
+        } else {
+            //list.remove(t);
+            processRemoveT(t);
+            flag2 = false;
+            System.out.println("Elemento borrado");
+        }
+        /*}*/
     }
 
+    public void findById() {
+        /*if (isListEmpty()) {
+            System.out.println("No hay elementos");
+            return;
+        }
+        flag2 = true;
+        while (flag2) {*/
+        print();
+        System.out.println("Ingrese el id del elemento a buscar");
+        t = list.stream()
+                .filter(e -> e.getId().equals(ReadUtil.readInt()))
+                .findFirst().orElse(null);
+        if (t == null) {
+            System.out.println("Id incorrecto, inténtelo nuevamente");
+        } else {
+            processFindByIdT(t.getId());
+        }
+        /*}*/
+    }
     @Override
     public void procesaOpcion() {
         switch (opcion) {
@@ -70,7 +119,7 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
             case 2 -> edit();
             case 3 -> remove();
             case 4 -> print();
-            case 5 -> System.out.println(5);
+            case 5 -> findById();
         }
     }
 
@@ -80,8 +129,8 @@ public abstract class Catalogos<T extends Catalogo> extends LecturaAccion {
 
     @Override
     public void despliegaMenu() {
-        System.out.println("Menú de " + getTitulo() + ": ");
-        System.out.println("Seleccione una opción:");
+        System.out.println("Menu de " + getTitulo() + ": ");
+        System.out.println("Seleccione una opcion:");
         System.out.println("1.- Agregar");
         System.out.println("2.- Actualizar");
         System.out.println("3.- Borrar");

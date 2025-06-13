@@ -57,7 +57,7 @@ public class ArtistaJdbcImpl extends Conexion<Artista> implements ArtistaJdbc {
             }
             resultSet.close();
             statement.close();
-            closeConnection( );
+            ////closeConnection( );
             return artistas;
         }
         catch (SQLException e)
@@ -82,7 +82,7 @@ public class ArtistaJdbcImpl extends Conexion<Artista> implements ArtistaJdbc {
             preparedStatement.setString(1, artista.getArtista());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            ////closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -107,7 +107,7 @@ public class ArtistaJdbcImpl extends Conexion<Artista> implements ArtistaJdbc {
             preparedStatement.setInt(2, artista.getId());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            ////closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -131,7 +131,7 @@ public class ArtistaJdbcImpl extends Conexion<Artista> implements ArtistaJdbc {
             preparedStatement.setInt(1, artista.getId());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            ////closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -165,7 +165,7 @@ public class ArtistaJdbcImpl extends Conexion<Artista> implements ArtistaJdbc {
             }
             resultSet.close();
             statement.close();
-            closeConnection( );
+            //closeConnection( );
             return artista;
         }
         catch (SQLException e)

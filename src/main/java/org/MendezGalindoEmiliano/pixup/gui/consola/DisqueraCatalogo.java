@@ -2,14 +2,10 @@ package org.MendezGalindoEmiliano.pixup.gui.consola;
 
 import org.MendezGalindoEmiliano.pixup.model.Disquera;
 import org.MendezGalindoEmiliano.pixup.repository.jdbc.DisqueraJdbc;
-import org.MendezGalindoEmiliano.pixup.repository.jdbc.DisqueraJdbc;
-import org.MendezGalindoEmiliano.pixup.repository.jdbc.DisqueraJdbc;
-import org.MendezGalindoEmiliano.pixup.repository.jdbc.impl.DisqueraJdbcImpl;
-import org.MendezGalindoEmiliano.pixup.repository.jdbc.impl.DisqueraJdbcImpl;
 import org.MendezGalindoEmiliano.pixup.repository.jdbc.impl.DisqueraJdbcImpl;
 import org.MendezGalindoEmiliano.pixup.util.ReadUtil;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DisqueraCatalogo extends Catalogos<Disquera>
@@ -34,50 +30,70 @@ public class DisqueraCatalogo extends Catalogos<Disquera>
     }
 
     @Override
-    public boolean removeT(Disquera disquera) {
-        System.out.println("Dame el id de disquera:");
-        DisqueraJdbc disqueraJdbc = DisqueraJdbcImpl.getInstance();
-
-        disquera.setId(ReadUtil.readInt());
-        boolean res = disqueraJdbc.delete(disquera);
-
-        return res;
+    public boolean processNewT(Disquera Disquera) {
+        System.out.println("Dame el nombre de la disquera");
+        Disquera.setDisquera(ReadUtil.read());
+        return true;
     }
 
     @Override
-    public boolean editT(Disquera disquera) {
-        System.out.println("Dame el id de disquera:");
-        DisqueraJdbc disqueraJdbc = DisqueraJdbcImpl.getInstance();
-        disquera.setId(ReadUtil.readInt());
-        System.out.println("Dame el nuevo nombre");
-        disquera.setDisquera(ReadUtil.read());
-        boolean res = disqueraJdbc.update(disquera);
-
-        return res;
-    }
-
-    @Override
-    public boolean processNewT1(Disquera disquera) {
+    public boolean processNewT1(Disquera d) {
         System.out.println("Dame el nombre de la disquera:");
         DisqueraJdbc disqueraJdbc = DisqueraJdbcImpl.getInstance();
 
-        disquera.setDisquera(ReadUtil.read());
-        boolean res = disqueraJdbc.save(disquera);
+        d.setDisquera(ReadUtil.read());
+        boolean res = disqueraJdbc.save(d);
 
         return res;
     }
 
     @Override
-    public void processEditT(Disquera Disquera) {
-        System.out.println("El nombre del Disquera es: "+Disquera.getDisquera());
-        System.out.println("El id del Disquera es: "+Disquera.getId());
-        System.out.println("Dame el nuevo nombre del Disquera");
-        Disquera.setDisquera(ReadUtil.read());
+    public void processEditT(Disquera disquera) {
+        System.out.println("El nombre de la disquera es: "+disquera.getDisquera());
+        System.out.println("Dame el nuevo nombre de la disquera");
+        disquera.setDisquera(ReadUtil.read());
+
+        DisqueraJdbc disqueraJdbc = DisqueraJdbcImpl.getInstance();
+
+        disqueraJdbc.update(disquera);
+    }
+
+    @Override
+    public void processRemoveT(Disquera disquera)
+    {
+        System.out.println("El nombre de la disquera es: " + disquera.getDisquera());
+
+        DisqueraJdbc disqueraJdbc = DisqueraJdbcImpl.getInstance();
+
+        disqueraJdbc.delete(disquera);
+    }
+
+    @Override
+    public void processFindByIdT(int id)
+    {
+        DisqueraJdbc disqueraJdbc = DisqueraJdbcImpl.getInstance();
+
+        Disquera disquera = disqueraJdbc.findById(id);
+
+        System.out.println("Disquera encontrada:");
+        System.out.println(disquera.toString());
     }
 
     @Override
     public List<Disquera> processList() {
-        return List.of();
+        DisqueraJdbc disqueraJdbc=DisqueraJdbcImpl.getInstance();
+        List<Disquera> list = disqueraJdbc.findAll();
+
+        if (list == null) {
+            System.out.println("Error al ejecutar la consulta `findAll()`. Verifica la conexión y consulta.");
+            return new ArrayList<>();
+        }
+
+        if (list.isEmpty()) {
+            System.out.println("La base de datos está conectada, pero no hay registros en `tbl_disquera`.");
+        }
+
+        return list;
     }
 
     @Override

@@ -73,7 +73,7 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc
                 list.add( disco );
             }
             resultSet.close();
-            closeConnection( );
+            //closeConnection( );
             return list;
         }
         catch (SQLException e)
@@ -106,7 +106,7 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc
 
             int res = preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            ////closeConnection();
 
             return res == 1;
         } catch (SQLException e) {
@@ -138,7 +138,7 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc
 
             int res = preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
 
             return res == 1;
         } catch (SQLException e) {
@@ -161,7 +161,7 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc
 
             int res = preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
 
             return res == 1;
         } catch (SQLException e) {
@@ -225,7 +225,7 @@ public class DiscoJdbcImpl extends Conexion<Disco> implements DiscoJdbc
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
-                closeConnection();
+                //closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

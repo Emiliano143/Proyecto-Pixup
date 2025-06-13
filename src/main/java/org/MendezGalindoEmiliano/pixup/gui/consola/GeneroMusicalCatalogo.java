@@ -5,16 +5,20 @@ import org.MendezGalindoEmiliano.pixup.repository.jdbc.GeneroMusicalJdbc;
 import org.MendezGalindoEmiliano.pixup.repository.jdbc.impl.GeneroMusicalJdbcImpl;
 import org.MendezGalindoEmiliano.pixup.util.ReadUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GeneroMusicalCatalogo extends Catalogos<GeneroMusical> {
+public class GeneroMusicalCatalogo extends Catalogos<GeneroMusical>
+{
     private static GeneroMusicalCatalogo GeneroMusicalCatalogo;
 
-    private GeneroMusicalCatalogo() {
+    private GeneroMusicalCatalogo()
+    {
     }
-
-    public static GeneroMusicalCatalogo getInstance() {
-        if (GeneroMusicalCatalogo == null) {
+    public static GeneroMusicalCatalogo getInstance( )
+    {
+        if(GeneroMusicalCatalogo==null)
+        {
             GeneroMusicalCatalogo = new GeneroMusicalCatalogo();
         }
         return GeneroMusicalCatalogo;
@@ -26,55 +30,74 @@ public class GeneroMusicalCatalogo extends Catalogos<GeneroMusical> {
     }
 
     @Override
-    public boolean removeT(GeneroMusical generoMusical) {
-        System.out.println("Dame el id del generoMusical:");
+    public boolean processNewT(GeneroMusical GeneroMusical) {
+        System.out.println("Dame el genero musical");
+        GeneroMusical.setGeneroMusical(ReadUtil.read());
+        return true;
+    }
+
+    @Override
+    public boolean processNewT1(GeneroMusical g) {
+        System.out.println("Dame el nombre del genero musical:");
         GeneroMusicalJdbc generoMusicalJdbc = GeneroMusicalJdbcImpl.getInstance();
 
-        generoMusical.setId(ReadUtil.readInt());
-        boolean res = generoMusicalJdbc.delete(generoMusical);
+        g.setGeneroMusical(ReadUtil.read());
+        boolean res = generoMusicalJdbc.save(g);
 
         return res;
     }
 
+    @Override
+    public void processEditT(GeneroMusical generoMusical) {
+        System.out.println("El genero musical es: "+generoMusical.getGeneroMusical());
+        System.out.println("Dame el nuevo nombre del genero musical");
+        generoMusical.setGeneroMusical(ReadUtil.read());
 
-@Override
-public boolean editT(GeneroMusical generoMusical) {
-    System.out.println("Dame el id del generoMusical:");
-    GeneroMusicalJdbc generoMusicalJdbc = GeneroMusicalJdbcImpl.getInstance();
-    generoMusical.setId(ReadUtil.readInt());
-    System.out.println("Dame el nuevo nombre");
-    generoMusical.setGeneroMusical(ReadUtil.read());
-    boolean res = generoMusicalJdbc.update(generoMusical);
+        GeneroMusicalJdbc disqueraJdbc = GeneroMusicalJdbcImpl.getInstance();
 
-    return res;
-}
+        disqueraJdbc.update(generoMusical);
+    }
 
-@Override
-public boolean processNewT1(GeneroMusical generoMusical) {
-    System.out.println("Dame el nombre del generoMusical:");
-    GeneroMusicalJdbc generoMusicalJdbc = GeneroMusicalJdbcImpl.getInstance();
+    @Override
+    public void processRemoveT(GeneroMusical generoMusical)
+    {
+        System.out.println("El nombre del genero musical es: " + generoMusical.getGeneroMusical());
 
-    generoMusical.setGeneroMusical(ReadUtil.read());
-    boolean res = generoMusicalJdbc.save(generoMusical);
+        GeneroMusicalJdbc generoMusicalJdbc = GeneroMusicalJdbcImpl.getInstance();
 
-    return res;
-}
+        generoMusicalJdbc.delete(generoMusical);
+    }
 
-@Override
-public void processEditT(GeneroMusical GeneroMusical) {
-    System.out.println("El genero musical es: " + GeneroMusical.getGeneroMusical());
-    System.out.println("El id del genero musical es: " + GeneroMusical.getId());
-    System.out.println("Dame el nuevo genero musical");
-    GeneroMusical.setGeneroMusical(ReadUtil.read());
-}
+    @Override
+    public void processFindByIdT(int id)
+    {
+        GeneroMusicalJdbc generoMusicalJdbc = GeneroMusicalJdbcImpl.getInstance();
 
-@Override
-public List<GeneroMusical> processList() {
-    return List.of();
-}
+        GeneroMusical generoMusical = generoMusicalJdbc.findById(id);
 
-@Override
-public String getTitulo() {
-    return "Generos musicales";
-}
+        System.out.println("Genero Musical encontrada:");
+        System.out.println(generoMusical.toString());
+    }
+
+    @Override
+    public List<GeneroMusical> processList() {
+        GeneroMusicalJdbc generoMusicalJdbc=GeneroMusicalJdbcImpl.getInstance();
+        List<GeneroMusical> list = generoMusicalJdbc.findAll();
+
+        if (list == null) {
+            System.out.println("Error al ejecutar la consulta `findAll()`. Verifica la conexión y consulta.");
+            return new ArrayList<>();
+        }
+
+        if (list.isEmpty()) {
+            System.out.println("La base de datos está conectada, pero no hay registros en `tbl_disquera`.");
+        }
+
+        return list;
+    }
+
+    @Override
+    public String getTitulo() {
+        return "Generos musicales";
+    }
 }

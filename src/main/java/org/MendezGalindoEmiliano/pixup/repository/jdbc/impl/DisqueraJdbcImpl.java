@@ -60,7 +60,7 @@ public class DisqueraJdbcImpl extends Conexion<Disquera> implements DisqueraJdbc
             }
             resultSet.close();
             statement.close();
-            closeConnection( );
+            //closeConnection( );
             return disqueras;
         }
         catch (SQLException e)
@@ -85,7 +85,7 @@ public class DisqueraJdbcImpl extends Conexion<Disquera> implements DisqueraJdbc
             preparedStatement.setString(1, disquera.getDisquera());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -110,7 +110,7 @@ public class DisqueraJdbcImpl extends Conexion<Disquera> implements DisqueraJdbc
             preparedStatement.setInt(2, disquera.getId());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -134,7 +134,7 @@ public class DisqueraJdbcImpl extends Conexion<Disquera> implements DisqueraJdbc
             preparedStatement.setInt(1, disquera.getId());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -168,7 +168,7 @@ public class DisqueraJdbcImpl extends Conexion<Disquera> implements DisqueraJdbc
             }
             resultSet.close();
             statement.close();
-            closeConnection( );
+            //closeConnection( );
             return disquera;
         }
         catch (SQLException e)

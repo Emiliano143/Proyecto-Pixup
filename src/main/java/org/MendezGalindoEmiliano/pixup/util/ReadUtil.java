@@ -30,6 +30,10 @@ public class ReadUtil
     {
         return getInstance( ).getScanner( ).nextLine();
     }
+    public static Float readFloat( )
+    {
+        return null;
+    }
 
     public static Integer readInt( )
     {

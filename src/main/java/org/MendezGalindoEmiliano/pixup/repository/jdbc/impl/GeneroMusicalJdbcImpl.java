@@ -60,7 +60,7 @@ public class GeneroMusicalJdbcImpl extends Conexion<GeneroMusical> implements Ge
             }
             resultSet.close();
             statement.close();
-            closeConnection( );
+            //closeConnection( );
             return generoMusicals;
         }
         catch (SQLException e)
@@ -85,7 +85,7 @@ public class GeneroMusicalJdbcImpl extends Conexion<GeneroMusical> implements Ge
             preparedStatement.setString(1, generoMusical.getGeneroMusical());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -110,7 +110,7 @@ public class GeneroMusicalJdbcImpl extends Conexion<GeneroMusical> implements Ge
             preparedStatement.setInt(2, generoMusical.getId());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -134,7 +134,7 @@ public class GeneroMusicalJdbcImpl extends Conexion<GeneroMusical> implements Ge
             preparedStatement.setInt(1, generoMusical.getId());
             res=preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
             return res==1;
         }
         catch (SQLException e) {
@@ -168,7 +168,7 @@ public class GeneroMusicalJdbcImpl extends Conexion<GeneroMusical> implements Ge
             }
             resultSet.close();
             statement.close();
-            closeConnection( );
+            //closeConnection( );
             return generoMusical;
         }
         catch (SQLException e)

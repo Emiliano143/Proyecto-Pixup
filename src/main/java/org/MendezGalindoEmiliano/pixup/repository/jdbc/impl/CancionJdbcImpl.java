@@ -93,7 +93,7 @@ public class CancionJdbcImpl extends Conexion<Cancion> implements CancionJdbc {
             try {
                 if (resultSet != null) resultSet.close();
                 if (statement != null) statement.close();
-                closeConnection();
+                //closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -118,7 +118,7 @@ public class CancionJdbcImpl extends Conexion<Cancion> implements CancionJdbc {
 
             int res = preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
 
             return res == 1;
         } catch (SQLException e) {
@@ -144,7 +144,7 @@ public class CancionJdbcImpl extends Conexion<Cancion> implements CancionJdbc {
 
             int res = preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
 
             return res == 1;
         } catch (SQLException e) {
@@ -167,7 +167,7 @@ public class CancionJdbcImpl extends Conexion<Cancion> implements CancionJdbc {
 
             int res = preparedStatement.executeUpdate();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
 
             return res == 1;
         } catch (SQLException e) {
@@ -239,7 +239,7 @@ public class CancionJdbcImpl extends Conexion<Cancion> implements CancionJdbc {
 
             resultSet.close();
             preparedStatement.close();
-            closeConnection();
+            //closeConnection();
 
             return cancion;
         } catch (SQLException e) {

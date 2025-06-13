@@ -57,7 +57,7 @@ public class ListaCatalogos extends LecturaAccion
                 ejecutable = GeneroMusicalCatalogo.getInstance();
                 break;
             case 4:
-                ejecutable = DisqueraCatalogo.getInstance();
+                ejecutable = DiscoCatalgo.getInstance();
                 break;
             case 5:
                 ejecutable = CancionCatalogo.getInstance();
